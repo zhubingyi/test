@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>描述展示</title>
+    <meta charset="utf-8">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #ddd;
+        }
+        .content-list {
+            list-style: none;
+            padding: 0;
+        }
+        .content-item {
+            background: white;
+            margin: 15px 0;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            line-height: 1.6;
+        }
+        .no-content {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+            margin: 40px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>内容展示</h1>
+    
+    {% if descriptions %}
+        <div class="content-list">
+        {% for description in descriptions %}
+            <div class="content-item">{{ description }}</div>
+        {% endfor %}
+        </div>
+    {% else %}
+        <p class="no-content">暂无内容</p>
+    {% endif %}
+</body>
+</html> 

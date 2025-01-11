@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>描述列表</title>
+    <meta charset="utf-8">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #ddd;
+        }
+        .description-list {
+            list-style: none;
+            padding: 0;
+        }
+        .description-item {
+            background: white;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .add-button {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .add-button:hover {
+            background-color: #45a049;
+        }
+        .no-descriptions {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>描述列表</h1>
+    
+    {% if descriptions %}
+        <ul class="description-list">
+        {% for description in descriptions %}
+            <li class="description-item">{{ description }}</li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p class="no-descriptions">还没有添加任何描述</p>
+    {% endif %}
+    
+    <div style="text-align: center;">
+        <a href="/add" class="add-button">添加新描述</a>
+    </div>
+</body>
+</html> 
