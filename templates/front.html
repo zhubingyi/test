@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>描述展示</title>
+    <title>商品列表</title>
     <meta charset="utf-8">
     <style>
         body {
             font-family: Arial, sans-serif;
-            max-width: 800px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
             background-color: #f5f5f5;
@@ -17,19 +17,51 @@
             padding-bottom: 20px;
             border-bottom: 2px solid #ddd;
         }
-        .content-list {
-            list-style: none;
-            padding: 0;
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px 0;
         }
-        .content-item {
+        .product-card {
             background: white;
-            margin: 15px 0;
-            padding: 20px;
             border-radius: 8px;
+            overflow: hidden;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            line-height: 1.6;
+            transition: transform 0.3s;
+            cursor: pointer;
         }
-        .no-content {
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+        .product-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .product-info {
+            padding: 15px;
+        }
+        .product-name {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 0 0 10px 0;
+        }
+        .product-price {
+            color: #e44d26;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .product-description {
+            color: #666;
+            font-size: 14px;
+            margin-top: 10px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .no-products {
             text-align: center;
             color: #666;
             font-style: italic;
@@ -38,16 +70,25 @@
     </style>
 </head>
 <body>
-    <h1>内容展示</h1>
+    <h1>商品列表</h1>
     
-    {% if descriptions %}
-        <div class="content-list">
-        {% for description in descriptions %}
-            <div class="content-item">{{ description }}</div>
+    {% if products %}
+        <div class="product-grid">
+        {% for product in products %}
+            <a href="{{ url_for('product_detail', product_id=loop.index0) }}" style="text-decoration: none; color: inherit;">
+                <div class="product-card">
+                    <img src="{{ product.image_url }}" alt="{{ product.name }}" class="product-image">
+                    <div class="product-info">
+                        <h2 class="product-name">{{ product.name }}</h2>
+                        <div class="product-price">¥{{ "%.2f"|format(product.price) }}</div>
+                        <p class="product-description">{{ product.description }}</p>
+                    </div>
+                </div>
+            </a>
         {% endfor %}
         </div>
     {% else %}
-        <p class="no-content">暂无内容</p>
+        <p class="no-products">暂无商品</p>
     {% endif %}
 </body>
 </html> 

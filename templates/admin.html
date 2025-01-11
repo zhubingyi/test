@@ -24,15 +24,21 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="number"],
         textarea {
             width: 100%;
-            padding: 10px;
+            padding: 8px;
             border: 1px solid #ddd;
             border-radius: 4px;
-            margin-bottom: 10px;
-            font-size: 16px;
+            box-sizing: border-box;
         }
         .submit-btn {
             background-color: #4CAF50;
@@ -41,22 +47,28 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            width: 100%;
         }
-        .description-list {
+        .submit-btn:hover {
+            background-color: #45a049;
+        }
+        .product-list {
             margin-top: 30px;
         }
-        .description-item {
+        .product-item {
             background: #f9f9f9;
-            padding: 10px;
+            padding: 15px;
             margin: 10px 0;
             border-radius: 4px;
+            display: grid;
+            grid-template-columns: 100px 1fr;
+            gap: 15px;
         }
-        .view-front {
-            display: block;
-            text-align: center;
-            margin-top: 20px;
-            color: #666;
-            text-decoration: none;
+        .product-item img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 4px;
         }
     </style>
 </head>
@@ -65,21 +77,44 @@
     <div class="admin-panel">
         <form method="POST" action="/admin/add">
             <div class="form-group">
-                <h3>添加新描述</h3>
-                <textarea name="description" rows="4" placeholder="请输入描述内容..."></textarea>
+                <label for="name">商品名称</label>
+                <input type="text" id="name" name="name" required>
             </div>
-            <div style="text-align: center;">
-                <button type="submit" class="submit-btn">添加描述</button>
+            <div class="form-group">
+                <label for="price">商品价格</label>
+                <input type="number" id="price" name="price" step="0.01" required>
             </div>
+            <div class="form-group">
+                <label for="image_url">图片URL</label>
+                <input type="text" id="image_url" name="image_url" required>
+            </div>
+            <div class="form-group">
+                <label for="description">商品简介</label>
+                <textarea id="description" name="description" rows="3" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="detail">商品详情</label>
+                <textarea id="detail" name="detail" rows="6" required></textarea>
+            </div>
+            <button type="submit" class="submit-btn">添加商品</button>
         </form>
 
-        <div class="description-list">
-            <h3>已添加的描述：</h3>
-            {% for description in descriptions %}
-                <div class="description-item">{{ description }}</div>
+        <div class="product-list">
+            <h3>已添加的商品：</h3>
+            {% for product in products %}
+                <div class="product-item">
+                    <img src="{{ product.image_url }}" alt="{{ product.name }}">
+                    <div>
+                        <h4>{{ product.name }}</h4>
+                        <p>价格：¥{{ "%.2f"|format(product.price) }}</p>
+                        <p>{{ product.description }}</p>
+                    </div>
+                </div>
             {% endfor %}
         </div>
     </div>
-    <a href="/" class="view-front">查看前台展示页面</a>
+    <a href="/" style="display: block; text-align: center; margin-top: 20px; color: #666; text-decoration: none;">
+        查看前台展示页面
+    </a>
 </body>
 </html> 
